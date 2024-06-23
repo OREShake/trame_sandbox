@@ -87,11 +87,9 @@ with SinglePageLayout(server) as layout:
             fluid=True,
             classes="pa-0 fill-height",
         ):
-            view = vtk_widgets.VtkRemoteView(
+            view = vtk_widgets.VtkLocalView(
                 renderWindow,
                 ref="view",
-                nteractive_quality=100,
-                interactive_ratio=1,
             )
             ctrl.view_update = view.update
             ctrl.view_reset_camera = view.reset_camera
