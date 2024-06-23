@@ -1,3 +1,4 @@
+setuptools
 trame
 trame-vtk
 trame-vuetify

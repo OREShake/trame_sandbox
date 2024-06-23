@@ -10,6 +10,12 @@ state, ctrl = server.state, server.controller
 cone = vtkConeSource()
 cone.Update()
 
+mapper = vtkPolyDataMapper()
+mapper.SetInputConnection(cone.GetOutputPort())
+
+actor = vtkActor()
+actor.SetMapper(mapper)
+
 state.trame__title = "Trame Sandbox"
 
 with SinglePageLayout(server) as layout:
