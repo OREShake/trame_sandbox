@@ -2,13 +2,14 @@ from trame.app import get_server
 from trame.ui.vuetify import SinglePageLayout
 from trame.widgets import vtk, vuetify
 from vtkmodules.all import *
+import os
 
 server = get_server(client_type="vue2")
 state, ctrl = server.state, server.controller
 
-reader = vtkXMLUnstructuredGridReader()
-reader.SetFileName("final/01_sep.vtu")
-reader.Update()
+# reader = vtkXMLUnstructuredGridReader()
+# reader.SetFileName("final/01_sep.vtu")
+# reader.Update()
 
 renderer = vtkRenderer()
 window = vtkRenderWindow()
@@ -19,7 +20,7 @@ window.OffScreenRenderingOn()
 interactor.SetRenderWindow(window)
 
 with SinglePageLayout(server) as layout:
-    layout.title.set_text("Ansys Viewer")
+    layout.title.set_text(os.getcwd())
 
     with layout.content:
         with vuetify.VContainer(
