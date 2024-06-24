@@ -7,9 +7,9 @@ import os
 server = get_server(client_type="vue2")
 state, ctrl = server.state, server.controller
 
-# reader = vtkXMLUnstructuredGridReader()
-# reader.SetFileName("final/01_sep.vtu")
-# reader.Update()
+reader = vtkXMLUnstructuredGridReader()
+reader.SetFileName("/home/busya/code/trame_sandbox/final/01_sep.vtu")
+reader.Update()
 
 renderer = vtkRenderer()
 window = vtkRenderWindow()
