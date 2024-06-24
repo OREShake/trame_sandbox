@@ -8,6 +8,7 @@ state, ctrl = server.state, server.controller
 
 reader = vtkXMLUnstructuredGridReader()
 reader.SetFileName("final/01_sep.vtu")
+reader.Update()
 
 renderer = vtkRenderer()
 window = vtkRenderWindow()
