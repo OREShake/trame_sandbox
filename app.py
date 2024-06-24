@@ -11,10 +11,19 @@ reader = vtkXMLUnstructuredGridReader()
 reader.SetFileName("/home/busya/code/trame_sandbox/final/01_sep.vtu")
 reader.Update()
 
+mapper = vtkDataSetMapper()
+mapper.SetInputData(reader.GetOutput())
+
+actor = vtkActor()
+actor.SetMapper(mapper)
+actor.GetProperty().SetAmbient(0.4)
+actor.GetProperty().SetDiffuse(1)
+
 renderer = vtkRenderer()
 window = vtkRenderWindow()
 interactor = vtkRenderWindowInteractor()
 
+renderer.AddActor(actor)
 window.AddRenderer(renderer)
 window.OffScreenRenderingOn()
 interactor.SetRenderWindow(window)
