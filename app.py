@@ -115,8 +115,7 @@ with SinglePageLayout(server) as layout:
         with vuetify.VContainer(
                 fluid=True,
                 classes="pa-0 fill-height",):
-            view = vtk.VtkLocalView(
-                window, interactive_quality=100, interactive_ratio=1)
+            view = vtk.VtkLocalView(window)
             ctrl.view_update = view.update
             ctrl.view_reset_camera = view.reset_camera
 
