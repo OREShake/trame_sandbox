@@ -15,7 +15,7 @@ window.OffScreenRenderingOn()
 interactor.SetRenderWindow(window)
 
 reader = vtkXMLUnstructuredGridReader()
-reader.SetFileName("/home/busya/code/trame_sandbox/final/01_sep.vtu")
+reader.SetFileName("/deploy/final/01_sep.vtu")
 reader.Update()
 
 mapper = vtkDataSetMapper()
