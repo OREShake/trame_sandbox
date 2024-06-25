@@ -3,41 +3,72 @@ from trame.ui.vuetify import SinglePageLayout
 from trame.widgets import vtk, vuetify
 from vtkmodules.all import *
 
+# -----------------------------------------------------------------------------
+# Trame initialization
+# ----------------------------------------------------------------------------
+
 server = get_server(client_type="vue2")
 state, ctrl = server.state, server.controller
+state.trame__title = "Demo Viewer"
 
-renderer = vtkRenderer()
-window = vtkRenderWindow()
-interactor = vtkRenderWindowInteractor()
-
-window.AddRenderer(renderer)
-window.OffScreenRenderingOn()
-interactor.SetRenderWindow(window)
+# -----------------------------------------------------------------------------
+# Reading pipeline
+# ----------------------------------------------------------------------------
 
 reader = vtkXMLUnstructuredGridReader()
-reader.SetFileName("/deploy/final/01_sep.vtu")
+reader.SetFileName("./final/01_sep.vtu")
 reader.Update()
 
-mapper = vtkDataSetMapper()
-mapper.SetInputData(reader.GetOutput())
+data = vtkUnstructuredGrid()
+data.ShallowCopy(reader.GetOutput())
 
-actor = vtkActor()
-actor.SetMapper(mapper)
-actor.GetProperty().SetAmbient(0.4)
-actor.GetProperty().SetDiffuse(1)
+variables = []
+for i in range(data.GetPointData().GetNumberOfArrays()):
+    variables.append(data.GetPointData().GetArrayName(i))
+data.GetPointData().SetActiveScalars(variables[0])
 
-renderer.AddActor(actor)
+lut = vtkLookupTable()
+lut.SetNumberOfColors(256)
+lut.SetHueRange(0.667, 0.0)
+lut.Build()
+
+data_mapper = vtkDataSetMapper()
+data_mapper.SetInputData(data)
+data_mapper.SetScalarRange(data.GetScalarRange())
+data_mapper.SetScalarModeToUsePointData()
+data_mapper.SetColorModeToMapScalars()
+data_mapper.SetLookupTable(lut)
+
+data_actor = vtkActor()
+data_actor.SetMapper(data_mapper)
+data_actor.GetProperty().SetAmbient(0.4)
+data_actor.GetProperty().SetDiffuse(1)
+
+# -----------------------------------------------------------------------------
+# Visualization space
+# ----------------------------------------------------------------------------
+
+renderer = vtkRenderer()
+renderer.AddActor(data_actor)
+renderer.SetBackground(1, 1, 1)
 renderer.ResetCamera()
+
+window = vtkRenderWindow()
+window.AddRenderer(renderer)
+window.OffScreenRenderingOn()
 window.Render()
 
+interactor = vtkRenderWindowInteractor()
+interactor.SetRenderWindow(window)
+
 with SinglePageLayout(server) as layout:
-    layout.title.set_text("Ansys Viewer")
+    layout.title.set_text("Demo Viewer")
 
     with layout.content:
         with vuetify.VContainer(
                 fluid=True,
                 classes="pa-0 fill-height",):
-            view = vtk.VtkRemoteView(window)
+            view = vtk.VtkLocalView(window)
             ctrl.view_update = view.update
             ctrl.view_reset_camera = view.reset_camera
 
