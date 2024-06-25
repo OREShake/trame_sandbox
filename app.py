@@ -4,6 +4,10 @@ from trame.widgets import vtk, vuetify
 from vtkmodules.all import *
 import os
 
+# VTK factory initialization
+from vtkmodules.vtkInteractionStyle import vtkInteractorStyleSwitch  # noqa
+import vtkmodules.vtkRenderingOpenGL2  # noqa
+
 server = get_server(client_type="vue2")
 state, ctrl = server.state, server.controller
 
@@ -30,7 +34,7 @@ actor.GetProperty().SetDiffuse(1)
 
 renderer.AddActor(actor)
 renderer.ResetCamera()
-renderer.Render()
+window.Render()
 
 with SinglePageLayout(server) as layout:
     layout.title.set_text("Ansys Viewer")
