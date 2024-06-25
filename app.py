@@ -16,7 +16,8 @@ state.trame__title = "Demo Viewer"
 # ----------------------------------------------------------------------------
 
 reader = vtkXMLUnstructuredGridReader()
-reader.SetFileName("./final/01_sep.vtu")
+reader.SetFileName("/deploy/final/01_sep.vtu")
+# reader.SetFileName("./final/01_sep.vtu")
 reader.Update()
 
 data = vtkUnstructuredGrid()
