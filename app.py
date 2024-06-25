@@ -9,6 +9,7 @@ state, ctrl = server.state, server.controller
 
 reader = vtkXMLUnstructuredGridReader()
 reader.SetFileName("/home/busya/code/trame_sandbox/final/01_sep.vtu")
+# reader.SetFileName("./final/01_sep.vtu")
 reader.Update()
 
 mapper = vtkDataSetMapper()
@@ -36,7 +37,7 @@ with SinglePageLayout(server) as layout:
         with vuetify.VContainer(
                 fluid=True,
                 classes="pa-0 fill-height",):
-            view = vtk.VtkLocalView(window)
+            view = vtk.VtkRemoteView(window)
             ctrl.view_update = view.update
             ctrl.view_reset_camera = view.reset_camera
 
