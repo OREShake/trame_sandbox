@@ -24,6 +24,7 @@ window = vtkRenderWindow()
 interactor = vtkRenderWindowInteractor()
 
 renderer.AddActor(actor)
+renderer.ResetCamera()
 window.AddRenderer(renderer)
 window.OffScreenRenderingOn()
 interactor.SetRenderWindow(window)
