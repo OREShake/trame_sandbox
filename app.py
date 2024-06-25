@@ -2,39 +2,33 @@ from trame.app import get_server
 from trame.ui.vuetify import SinglePageLayout
 from trame.widgets import vtk, vuetify
 from vtkmodules.all import *
-import os
-
-# VTK factory initialization
-from vtkmodules.vtkInteractionStyle import vtkInteractorStyleSwitch  # noqa
-import vtkmodules.vtkRenderingOpenGL2  # noqa
 
 server = get_server(client_type="vue2")
 state, ctrl = server.state, server.controller
 
-# renderer = vtkRenderer()
-# window = vtkRenderWindow()
-# interactor = vtkRenderWindowInteractor()
+renderer = vtkRenderer()
+window = vtkRenderWindow()
+interactor = vtkRenderWindowInteractor()
 
-# window.AddRenderer(renderer)
-# window.OffScreenRenderingOn()
-# interactor.SetRenderWindow(window)
+window.AddRenderer(renderer)
+window.OffScreenRenderingOn()
+interactor.SetRenderWindow(window)
 
 reader = vtkXMLUnstructuredGridReader()
-# reader.SetFileName("/home/busya/code/trame_sandbox/final/01_sep.vtu")
-reader.SetFileName("./final/01_sep.vtu")
+reader.SetFileName("/home/busya/code/trame_sandbox/final/01_sep.vtu")
 reader.Update()
 
-# mapper = vtkDataSetMapper()
-# mapper.SetInputData(reader.GetOutput())
+mapper = vtkDataSetMapper()
+mapper.SetInputData(reader.GetOutput())
 
-# actor = vtkActor()
-# actor.SetMapper(mapper)
-# actor.GetProperty().SetAmbient(0.4)
-# actor.GetProperty().SetDiffuse(1)
+actor = vtkActor()
+actor.SetMapper(mapper)
+actor.GetProperty().SetAmbient(0.4)
+actor.GetProperty().SetDiffuse(1)
 
-# renderer.AddActor(actor)
-# renderer.ResetCamera()
-# window.Render()
+renderer.AddActor(actor)
+renderer.ResetCamera()
+window.Render()
 
 with SinglePageLayout(server) as layout:
     layout.title.set_text("Ansys Viewer")
